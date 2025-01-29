@@ -1,7 +1,7 @@
-<project name="Plant" default="compile" basedir="../../Downloads">
+<project name="Plant" default="compile" basedir="../../IdeaProjects/JuiceLab">
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
-  <property name="dist" location="../../Downloads/dist"/>
+  <property name="dist" location="dist"/>
 
   <target name="init">
     <mkdir dir="${dist}"/>
@@ -13,7 +13,7 @@
   </target>
 
   <target name="jar" depends="init,compile">
-    <jar destfile="${dist}/${ant.project.name}.jar" basedir="../../Downloads/dist/classes">
+    <jar destfile="${dist}/${ant.project.name}.jar" basedir="dist/classes">
       <manifest>
         <attribute name="Main-Class" value="${ant.project.name}"/>
       </manifest>

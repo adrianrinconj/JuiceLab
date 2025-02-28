@@ -70,7 +70,7 @@ public class Plant implements Runnable {
         }
         System.out.println("Total provided/processed = " + totalProvided + "/" + totalProcessed);
         System.out.println("Created " + totalBottles +
-                ", wasted " + totalWasted + " oranges");
+                ", wasted " + (-1 * totalWasted) + " oranges");
     }
 
 
@@ -164,6 +164,7 @@ public class Plant implements Runnable {
         System.out.println(Thread.currentThread().getName() + " Done");
     }
 
+
     /**
      * Processes an entire orange until it is bottled.
      *
@@ -213,6 +214,6 @@ public class Plant implements Runnable {
      * @return The number of wasted oranges.
      */
     public int getWaste() {
-        return orangesProcessed % ORANGES_PER_BOTTLE;
+        return orangesProcessed % ORANGES_PER_BOTTLE + (orangesProvided - orangesProcessed);
     }
 }

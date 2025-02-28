@@ -56,9 +56,9 @@ The `MultiPlant` class manages multiple `Plant` instances and runs them in paral
    ```sh
    javac Orange.java Plant.java MultiPlant.java
    ```
-2. Run the `MultiPlant` class:
+2. Run the `Plant` class:
    ```sh
-   java MultiPlant
+   java Plant
    ```
 3. The program will run for a set duration, process oranges, and output statistics.
 

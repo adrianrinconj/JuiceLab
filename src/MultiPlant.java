@@ -1,23 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public class Plant implements Runnable {
+public class MultiPlant implements Runnable {
     // How long do we want to run the juice processing
     public static final long PROCESSING_TIME = 5 * 1000;
 
     private static final int NUM_PLANTS = 2;
 
-    //make a new private static final int so that I can have multiple workers for a single plant
-    private static final int PLANT_THREADS = 3;
+    public MultiPlant(Thread thread) {
+        this.thread = thread;
+    }
 
-    // used these articles as a reference: https://www.geeksforgeeks.org/multithreading-in-java/
-    // https://www.tutorialspoint.com/java/java_multithreading.htm
     public static void main(String[] args) {
         // Startup the plants
         Plant[] plants = new Plant[NUM_PLANTS];
         for (int i = 0; i < NUM_PLANTS; i++) {
-            //add plant threads as a parameter instead
-            plants[i] = new Plant(i+1, PLANT_THREADS);
+            // add 3 to the parameters which is the numThreads
+            plants[i] = new Plant(i+1, 3);
             plants[i].startPlant();
         }
 
@@ -59,54 +55,39 @@ public class Plant implements Runnable {
 
     public final int ORANGES_PER_BOTTLE = 3;
 
-
-    // Use List<Thread> in order to use multiple threads per plant.
-    private final List<Thread> threads = new ArrayList<>();
-    private final int numThreads;
+    private Thread thread;
     private int orangesProvided;
     private int orangesProcessed;
     private volatile boolean timeToWork;
 
-    Plant(int threadNum, int numThreads) {
-        this.numThreads = numThreads;
+    void Plant(int threadNum) {
         orangesProvided = 0;
         orangesProcessed = 0;
-        for (int i = 0; i < numThreads; i++) {
-            threads.add(new Thread(this, "Plant[" + threadNum + "] Worker[" + (i + 1) + "]"));
-        }
+        thread = new Thread(this, "Plant[" + threadNum + "]");
     }
-
 
     public void startPlant() {
         timeToWork = true;
-        for (Thread t : threads) {
-            t.start();
-        }
+        thread.start();
     }
-
 
     public void stopPlant() {
         timeToWork = false;
     }
 
     public void waitToStop() {
-        for (Thread t : threads) {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                System.err.println(t.getName() + " stop malfunction");
-            }
-
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            System.err.println(thread.getName() + " stop malfunction");
         }
     }
 
     public void run() {
-        System.out.print(Thread.currentThread().getName() + " Processing oranges");
+        System.out.print(Thread.currentThread().getName() + " Processing oranges ");
         while (timeToWork) {
             processEntireOrange(new Orange());
             orangesProvided++;
-
-
         }
         System.out.println("");
         System.out.println(Thread.currentThread().getName() + " Done");
@@ -116,10 +97,7 @@ public class Plant implements Runnable {
         while (o.getState() != Orange.State.Bottled) {
             o.runProcess();
         }
-
-        synchronized (this) {
-            orangesProcessed++;
-        }
+        orangesProcessed++;
     }
 
     public int getProvidedOranges() {

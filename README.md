@@ -11,11 +11,11 @@ This Java-based multithreaded system simulates an automated orange juice bottlin
 
 ### Orange.java
 The `Orange` class models the lifecycle of an orange as it moves through different processing stages:
-- **Fetched** (15ms)
-- **Peeled** (38ms)
-- **Squeezed** (29ms)
-- **Bottled** (17ms)
-- **Processed** (1ms)
+- **Fetched** 
+- **Peeled** 
+- **Squeezed** 
+- **Bottled**
+- **Processed** 
 
 #### Key Features:
 - Uses an enum `State` to track the processing stage.
@@ -61,22 +61,6 @@ The `MultiPlant` class manages multiple `Plant` instances and runs them in paral
    java MultiPlant
    ```
 3. The program will run for a set duration, process oranges, and output statistics.
-
-## Expected Output
-```
-Plant[1] Worker[1] Processing oranges
-Plant[1] Worker[2] Processing oranges
-Plant[2] Worker[1] Processing oranges
-...
-Total provided/processed = 100/95
-Created 31 bottles, wasted 2 oranges
-```
-
-## Future Enhancements
-- Implement a **queue system** to better distribute orange processing.
-- Optimize **synchronization** to reduce bottlenecks.
-- Introduce **error handling** for interrupted processing.
-- Extend functionality to handle different fruit types.
 
 ## References
 - [Multithreading in Java (GeeksforGeeks)](https://www.geeksforgeeks.org/multithreading-in-java/)

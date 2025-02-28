@@ -13,7 +13,7 @@ public class MultiPlant implements Runnable {
         Plant[] plants = new Plant[NUM_PLANTS];
         for (int i = 0; i < NUM_PLANTS; i++) {
             // add 3 to the parameters which is the numThreads
-            plants[i] = new Plant(i+1, 3);
+            plants[i] = new Plant(i + 1, 3);
             plants[i].startPlant();
         }
 

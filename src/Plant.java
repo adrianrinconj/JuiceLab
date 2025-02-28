@@ -17,7 +17,7 @@ public class Plant implements Runnable {
         Plant[] plants = new Plant[NUM_PLANTS];
         for (int i = 0; i < NUM_PLANTS; i++) {
             //add plant threads as a parameter instead
-            plants[i] = new Plant(i+1, PLANT_THREADS);
+            plants[i] = new Plant(i + 1, PLANT_THREADS);
             plants[i].startPlant();
         }
 
